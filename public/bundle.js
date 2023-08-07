@@ -4171,23 +4171,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function OnePoke() {
-  const [onlyPoke, setonlyPoke] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [onlyPoke, setOnlyPoke] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const {
     id
   } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useParams)(); //extracting id from URLS -> backend route
-
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     async function fetchPokemonDetails() {
-      const {
-        data
-      } = await axios__WEBPACK_IMPORTED_MODULE_2__["default"].get(`/api/Pokemon/${id}`);
-      setonlyPoke(data);
+      try {
+        const {
+          data
+        } = await axios__WEBPACK_IMPORTED_MODULE_2__["default"].get(`/api/Pokemon/${id}`);
+        setOnlyPoke(data);
+        console.log(data);
+      } catch (error) {
+        console.error('Error fetching Pokemon details:', error);
+      }
     }
     fetchPokemonDetails();
-    console.log(onlyPoke);
-  }, []); //array will make useeffect run once instead of infinite
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "OnePoke:", onlyPoke.name, ";");
+  }, [id]); //array will make useeffect run once instead of infinite
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, onlyPoke ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "OnePoke:", onlyPoke.type, onlyPoke.name, onlyPoke.TrainerId, onlyPoke.image) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Loading..."));
 }
 
 /***/ }),

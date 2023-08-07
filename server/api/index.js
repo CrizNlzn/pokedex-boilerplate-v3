@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const { db, Trainer, Pokemon } = require("../db");
+const { db } = require("../db");
 //line under goes back to server -> db -> index so we can get our PokemonTable
-//const { Pokemon } = require("../db/index");
-//const { Trainer } = require("../db/index");
+const { Pokemon } = require("../db");
+const { Trainer } = require("../db");
 
 // Connect your API routes here!
 

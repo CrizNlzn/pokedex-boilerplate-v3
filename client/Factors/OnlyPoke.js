@@ -1,25 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
 export default function OnePoke() {
-	const [onlyPoke, setonlyPoke] = useState(null);
-	const { id } = useParams(); //extracting id from URLS -> backend route
+    const [onlyPoke, setOnlyPoke] = useState(null);
+    const { id } = useParams(); //extracting id from URLS -> backend route
+    useEffect(() => {
+        async function fetchPokemonDetails() {
+            try {
+                const { data } = await axios.get(`/api/Pokemon/${id}`);
+                setOnlyPoke(data);
+                console.log(data);
+            } catch (error) {
+                console.error('Error fetching Pokemon details:', error);
+            }
+        }
+        fetchPokemonDetails();
+    }, [id]); //array will make useeffect run once instead of infinite
+    return (
+        <div>
+            {onlyPoke ? (
+                <div>
+                    OnePoke:
+                    {onlyPoke.type} 
 
-	useEffect(() => {
-		async function fetchPokemonDetails() {
-			const { data } = await axios.get(`/api/Pokemon/${id}`);
-			setonlyPoke(data);
-		 }
-	  
-		  fetchPokemonDetails();
-		  console.log(onlyPoke);
-	}, []) //array will make useeffect run once instead of infinite
+                    {onlyPoke.name}
 
-  return (
-	<div>OnePoke:
-	{/* {onlyPoke.name}; */}
-		 </div>
-  )
+					{onlyPoke.TrainerId}
+
+					{onlyPoke.image}
+                </div>
+            ) : (
+                <div>Loading...</div>
+            )}
+        </div>
+    );
 }
-
