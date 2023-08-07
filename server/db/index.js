@@ -36,13 +36,11 @@ const { Sequelize, db } = require("./db");
 
 // place your associations here!
 
+Pokemon.belongsTo(Trainer);
 Trainer.hasMany(Pokemon);
-Pokemon.belongsTo(Trainer, { foreignKey: "TrainerId"});
 
 // export your models below
 
 module.exports = {
-  db,
-  Trainer,
-  Pokemon,
+  db, Trainer, Pokemon,
 };

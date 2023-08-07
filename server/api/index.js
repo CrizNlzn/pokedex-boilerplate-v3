@@ -1,5 +1,8 @@
 const router = require("express").Router();
-const { db } = require("../db");
+const { db, Trainer, Pokemon } = require("../db");
+//line under goes back to server -> db -> index so we can get our PokemonTable
+//const { Pokemon } = require("../db/index");
+//const { Trainer } = require("../db/index");
 
 // Connect your API routes here!
 
@@ -13,11 +16,11 @@ router.get("/Pokemon", async (req, res, next) => {
 		}
 });
 
-//Part 2 BACKEND:
-router.get("/Pokemon/:pokeId", async (req, res, next) => {
+//Part 2 BACKEND: work on this
+router.get("/Pokemon/:id", async (req, res, next) => {
 	try {
 		const pokemon = await Pokemon.findOne({
-			where: { id: req.params.PokeId },
+			where: { id: req.params.id },
 			include: Trainer,
 		});
 
@@ -25,6 +28,7 @@ router.get("/Pokemon/:pokeId", async (req, res, next) => {
 		res.send(pokemon);
 	}
 		catch (err) {
+			console.log("error");
 			next(err);
 		}
 });
@@ -32,14 +36,15 @@ router.get("/Pokemon/:pokeId", async (req, res, next) => {
 //Part 2 BACKEND:
 router.get("/Trainers", async (req, res, next) => {
 	try {
-		const pokemon = await trainer.FindAll();
-		res.send(pokemon);
+		const trainer = await Trainer.findAll();
+		res.send(trainer);
 	}
 			catch (err) {
 			next(err);
 			}
 });
 
+//work on this
 router.get("/Trainers/:trainerId", async (req, res, next) => {
 	try {
 		const pokemon = await Trainer.findByPk(req.params.trainerId);

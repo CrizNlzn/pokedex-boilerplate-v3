@@ -1,43 +1,29 @@
-import React,  {useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Factors/Home";
+import OneTrainer from "./Factors/OnlyTrainer";
+import OnePoke from "./Factors/OnlyPoke";
+
 
 const Main = () => {
-  
-      const [pokemon, setPokemon] = useState([]);
+  const [pokemon, setPokemon] = useState([]);
 
-      useEffect(() => {
-        async function fetchPoke() {
-          const { data } = await axios.get("/api/pokemon");
-            setPokemon(data);
-        }
+  useEffect(() => {
+    async function fetchPoke() {
+      const { data } = await axios.get("/api/pokemon");
+      setPokemon(data);
+    }
 
-        fetchPoke();
-      }, []);
-
+    fetchPoke();
+  }, []);
 
   return (
-    <Router>
-      <Routes>
-        {/* goes into home and display the home page  */}
-        <Route exact path = "/" element = {< home />} />
-          
-          
-            {/* <Route exact path = "/api/trainer"> */}
-              
-              {/* <Trainers/> */}
-
-
-              {/* <Route exact path = "/api/Pokemon/:PokeId"> */}
-                {/* <OnlyPoke/> */}
-              
-
-                {/* <Route exact path = "/api/Trainers/:trainerId"> */}
-                  {/* <OnlyTrainer/> */}
-                
-      </Routes>
-        
-    </Router>
+    <Routes>
+      <Route path="/" element={<Home />} /> 
+      <Route path = "/poke/:id" element = {<OnePoke />} />
+      <Route path = "/trainer/:id" element = {<OneTrainer />} />
+    </Routes>
   );
 };
 

@@ -6,7 +6,7 @@ const AllTrainers = () => {
 
 		useEffect(() => {
 			axios.get("/api/Trainers").then((response) => {
-				setPokeList(response.data);
+				setTrainerList(response.data); //stores all data in backend
 			});
 
 		}, []);
@@ -15,11 +15,11 @@ const AllTrainers = () => {
 	<div>
 		<h3> Trainers</h3>
 		<ul>
-			{trainerList.map((Trainers) => (
+			{trainerList.map((Trainers) => ( //loops (map) all data in trainerlist and shows it in console
 				<li
-					key = {trainer.trainerId}>
-						<img src = {Trainers.image} alt = {Trainers.name} />
-						{Trainers.name}
+					key = {Trainers.id}>
+						<img src = {Trainers.image}/>
+						<p> {Trainers.firstName} </p>
 				</li>
 			))}
 		</ul>

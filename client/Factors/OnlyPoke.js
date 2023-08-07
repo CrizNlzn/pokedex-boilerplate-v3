@@ -1,22 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-const OnePoke = ({ pokemon }) => {
-	const { name, type, image } = trainer;
+export default function OnePoke() {
+	const [onlyPoke, setonlyPoke] = useState(null);
+	const { id } = useParams(); //extracting id from URLS -> backend route
 
-	return (
-		<div>
-			<h3> {name} </h3>
-			
-			<p>
-				Trainer: {trainer}
-			</p>
-					<p>
-						Type: {type}
-					</p>
+	useEffect(() => {
+		async function fetchPokemonDetails() {
+			const { data } = await axios.get(`/api/Pokemon/${id}`);
+			setonlyPoke(data);
+		 }
+	  
+		  fetchPokemonDetails();
+		  console.log(onlyPoke);
+	}, []) //array will make useeffect run once instead of infinite
 
-						<img src= {image} />
-		</div>
-	);
-};
+  return (
+	<div>OnePoke:
+	{/* {onlyPoke.name}; */}
+		 </div>
+  )
+}
 
-export default OnePoke;
